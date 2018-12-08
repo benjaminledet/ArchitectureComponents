@@ -2,6 +2,8 @@ package com.dream.architecturecomponents.data
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.LiveData
+import org.jetbrains.anko.doAsync
 
 object MovieRepository {
 
@@ -14,19 +16,17 @@ object MovieRepository {
         movieDao = database.movieDao()
     }
 
-    fun insertAll(movies: List<Movie>) {
-        movies.forEach { movie -> if(movie.id == 0) movie.id = (getAll().maxBy { it.id }?.id ?: 0) + 1 }
+    fun insertAll(movies: List<Movie>) = doAsync {
+        movies.forEach { movie -> if(movie.id == 0) movie.id = (movieDao.getAll().maxBy { it.id }?.id ?: 0) + 1 }
         movieDao.insertAll(movies)
         Log.d("movieRepository","inserting movies: $movies")
     }
 
     fun insert(movie: Movie) = insertAll(listOf(movie))
 
-    fun delete(movie: Movie) {
-        movieDao.delete(movie)
-    }
+    fun delete(movie: Movie) = doAsync { movieDao.delete(movie) }
 
-    fun getById(id: Int): Movie = movieDao.getById(id)
+    fun getById(id: Int): LiveData<Movie> = movieDao.getById(id)
 
-    fun getAll(): List<Movie> = movieDao.getAll()
+    fun getAll(): LiveData<List<Movie>> = movieDao.getAllLive()
 }

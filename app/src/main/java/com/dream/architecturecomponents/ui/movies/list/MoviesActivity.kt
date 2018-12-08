@@ -2,6 +2,7 @@ package com.dream.architecturecomponents.ui.movies.list
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dream.architecturecomponents.R
@@ -27,15 +28,11 @@ class MoviesActivity : AppCompatActivity() {
         setupRecyclerView()
     }
 
-    override fun onResume() {
-        super.onResume()
-        doAsync {
-            val data = MovieRepository.getAll()
-            uiThread { moviesAdapter.replaceData(data) }
-        }
-    }
-
     private fun setupAdapter() {
+        MovieRepository.getAll().observe(this, Observer {
+            moviesAdapter.submitList(it)
+        })
+
         moviesAdapter.apply {
             onClick = { startAnimatedActivity(intentFor<DetailMovieActivity>("id" to it.id)) }
             onLongClick = { showDeletePopup(it) }
@@ -56,13 +53,7 @@ class MoviesActivity : AppCompatActivity() {
 
     private fun showDeletePopup(movie: Movie) {
         alert(getString(R.string.delete_movie_warning, movie.title)) {
-            yesButton {
-                doAsync {
-                    MovieRepository.delete(movie)
-                    val data = MovieRepository.getAll()
-                    uiThread { moviesAdapter.replaceData(data) }
-                }
-            }
+            yesButton { MovieRepository.delete(movie) }
             noButton { }
         }.show()
     }

@@ -3,7 +3,6 @@ package com.dream.architecturecomponents
 import android.app.Application
 import com.dream.architecturecomponents.data.Movie
 import com.dream.architecturecomponents.data.MovieRepository
-import org.jetbrains.anko.doAsync
 import java.util.*
 
 class App: Application() {
@@ -21,6 +20,6 @@ class App: Application() {
             Movie(id = 3, title = "Conjuring: Les dossiers Warren", overview = getString(R.string.conjuring_overview), releaseDate = calendar.apply { set(2013, 7, 21) }.time, isForAdultsOnly = true)
         )
 
-        doAsync { MovieRepository.insertAll(movies) }
+        MovieRepository.insertAll(movies)
     }
 }

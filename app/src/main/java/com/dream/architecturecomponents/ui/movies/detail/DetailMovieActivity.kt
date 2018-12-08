@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
 import com.dream.architecturecomponents.R
 import com.dream.architecturecomponents.data.Movie
 import com.dream.architecturecomponents.data.MovieRepository
@@ -20,13 +21,11 @@ class DetailMovieActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
 
-        doAsync {
-            movie = MovieRepository.getById(intent.getIntExtra("id", 0) )
-            uiThread {
-                setupToolbar()
-                setupViews()
-            }
-        }
+        MovieRepository.getById(intent.getIntExtra("id", 0)).observe(this, Observer {
+            movie = it
+            setupToolbar()
+            setupViews()
+        })
     }
 
     override fun finish() {

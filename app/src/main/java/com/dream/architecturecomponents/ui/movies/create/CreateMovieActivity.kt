@@ -49,10 +49,8 @@ class CreateMovieActivity : AppCompatActivity() {
             true
         }
         R.id.confirm -> {
-            doAsync {
-                MovieRepository.insert(movie)
-                uiThread { ActivityCompat.finishAfterTransition(this@CreateMovieActivity) }
-            }
+            MovieRepository.insert(movie)
+            ActivityCompat.finishAfterTransition(this@CreateMovieActivity)
             true
         }
         else -> super.onOptionsItemSelected(item)
