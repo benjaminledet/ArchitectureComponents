@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Movies</string>
+
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="confirm">Confirmer</string>
+    <string name="movies">Films</string>
+    <string name="create_movie">Créer un film</string>
+    <string name="delete_movie">Supprimer un film</string>
+    <string name="delete_movie_warning">Voulez-vous vraiment supprimer le film %1$s?</string>
+
+    <string name="overview">Synopsis</string>
+    <string name="title">Titre</string>
+    <string name="releaseDate">Date de sortie</string>
+    <string name="isForAdultsOnly">Interdit au moins de 18 ans</string>
+
+    <string name="avengers_overview">Nick Fury, le directeur du S.H.I.E.L.D., l\'organisation qui préserve la paix dans le monde, veut former une équipe d\'irréductibles pour empêcher la destruction du monde. Iron Man, Hulk, Thor, Captain America, Hawkeye et Black Widow répondent présents. La nouvelle équipe, baptisée Avengers, a beau sembler soudée, il reste encore à ses illustres membres à apprendre à travailler ensemble.</string>
+    <string name="jumanji_overview">Après avoir découvert une vieille console contenant un jeu vidéo dont ils n\'avaient jamais entendu parler, quatre jeunes se retrouvent mystérieusement propulsés au coeur de la jungle de Jumanji, dans le corps de leurs avatars. Ils découvrent rapidement que l\'on ne joue pas à Jumanji, mais que c\'est le jeu qui joue avec vous. Pour revenir dans le monde réel, il va leur falloir affronter les pires dangers et triompher de l\'ultime aventure. Sinon, ils resteront à jamais prisonniers du jeu.</string>
+    <string name="conjuring_overview">L\'histoire horrible, mais vraie, d\'Ed et Lorraine Warren, enquêteurs paranormaux réputés dans le monde entier, venus en aide à une famille terrorisée par une présence inquiétante dans leur ferme isolée. Contraints d\'affronter une créature démoniaque d\'une force redoutable, les Warren se retrouvent face à l\'affaire la plus terrifiante de leur carrière.</string>
+
+</resources>
