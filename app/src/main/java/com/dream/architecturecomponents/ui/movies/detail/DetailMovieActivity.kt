@@ -4,30 +4,27 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.Observer
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProviders
 import com.dream.architecturecomponents.R
-import com.dream.architecturecomponents.data.Movie
-import com.dream.architecturecomponents.extension.dateToString
-import kotlinx.android.synthetic.main.activity_detail_movie.*
+import com.dream.architecturecomponents.databinding.ActivityDetailMovieBinding
 
 class DetailMovieActivity : AppCompatActivity() {
 
-    private val viewModel: DetailMovieViewModel by lazy { ViewModelProviders.of(this).get(DetailMovieViewModel::class.java) }
+    private lateinit var binding: ActivityDetailMovieBinding
 
-    private var movie: Movie? = null
+    private val viewModel: DetailMovieViewModel by lazy { ViewModelProviders.of(this).get(DetailMovieViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_movie)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_movie)
+        binding.setVariable(BR.viewModel, viewModel)
+        binding.setLifecycleOwner(this)
 
         viewModel.movieId.value = intent.getIntExtra("id", 0)
 
-        viewModel.movie.observe(this, Observer {
-            movie = it
-            setupToolbar()
-            setupViews()
-        })
+        setupToolbar()
     }
 
     override fun finish() {
@@ -44,18 +41,7 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(toolbar)
-        title = movie?.title
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    private fun setupViews() {
-        movie?.let { movie ->
-            overview.text = movie.overview
-
-            releaseDate.text = movie.releaseDate.dateToString().capitalize()
-
-            isForAdultsOnly.text = getString(if (movie.isForAdultsOnly) R.string.yes else R.string.no)
-        }
     }
 }

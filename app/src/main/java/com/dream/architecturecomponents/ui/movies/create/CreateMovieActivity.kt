@@ -6,16 +6,17 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProviders
 import com.dream.architecturecomponents.R
-import com.dream.architecturecomponents.extension.dateToString
-import kotlinx.android.synthetic.main.activity_create_movie.*
-import org.jetbrains.anko.sdk27.coroutines.onCheckedChange
+import com.dream.architecturecomponents.databinding.ActivityCreateMovieBinding
 import org.jetbrains.anko.sdk27.coroutines.onClick
-import org.jetbrains.anko.sdk27.coroutines.textChangedListener
 import java.util.*
 
 class CreateMovieActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityCreateMovieBinding
 
     private val viewModel: CreateMovieViewModel by lazy { ViewModelProviders.of(this).get(CreateMovieViewModel::class.java) }
 
@@ -23,7 +24,9 @@ class CreateMovieActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_movie)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_create_movie)
+        binding.setVariable(BR.viewModel, viewModel)
+        binding.setLifecycleOwner(this)
 
         setupDatePicker()
         setupToolbar()
@@ -54,32 +57,23 @@ class CreateMovieActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
     private fun setupViews() {
-        titleEditText.apply {
-            requestFocus()
-            textChangedListener { onTextChanged { charSequence, _, _, _ -> viewModel.title = charSequence.toString().capitalize() } }
-        }
+        binding.titleEditText.requestFocus()
 
-        overviewEditText.textChangedListener { onTextChanged { charSequence, _, _, _ -> viewModel.overview = charSequence.toString().capitalize() } }
-
-        releaseDateEditText.onClick { datePickerDialog?.show() }
-
-        isForAdultsOnlySwitch.onCheckedChange { _, isChecked -> viewModel.isForAdultsOnly = isChecked }
+        binding.releaseDateEditText.onClick { datePickerDialog?.show() }
     }
 
     private fun setupDatePicker() {
         val calendar: Calendar = Calendar.getInstance()
-        calendar.time = viewModel.releaseDate
-
+        calendar.time = viewModel.releaseDate.value ?: Date()
         datePickerDialog = DatePickerDialog(
             this,
             { _, year, month, dayOfMonth ->
                 calendar.set(year, month, dayOfMonth)
-                releaseDateEditText.setText(calendar.time.dateToString().capitalize())
-                viewModel.releaseDate = calendar.time
+                viewModel.releaseDate.value = calendar.time
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
