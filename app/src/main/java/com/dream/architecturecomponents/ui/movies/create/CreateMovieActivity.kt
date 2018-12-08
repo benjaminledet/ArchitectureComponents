@@ -11,9 +11,11 @@ import com.dream.architecturecomponents.data.Movie
 import com.dream.architecturecomponents.data.MovieRepository
 import com.dream.architecturecomponents.extension.dateToString
 import kotlinx.android.synthetic.main.activity_create_movie.*
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.sdk27.coroutines.onCheckedChange
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.sdk27.coroutines.textChangedListener
+import org.jetbrains.anko.uiThread
 import java.util.*
 
 class CreateMovieActivity : AppCompatActivity() {
@@ -47,8 +49,10 @@ class CreateMovieActivity : AppCompatActivity() {
             true
         }
         R.id.confirm -> {
-            MovieRepository.movies.add(movie)
-            ActivityCompat.finishAfterTransition(this)
+            doAsync {
+                MovieRepository.insert(movie)
+                uiThread { ActivityCompat.finishAfterTransition(this@CreateMovieActivity) }
+            }
             true
         }
         else -> super.onOptionsItemSelected(item)

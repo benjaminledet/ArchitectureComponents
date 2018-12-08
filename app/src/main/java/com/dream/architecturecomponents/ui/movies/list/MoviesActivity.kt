@@ -11,11 +11,8 @@ import com.dream.architecturecomponents.extension.startAnimatedActivity
 import com.dream.architecturecomponents.ui.movies.create.CreateMovieActivity
 import com.dream.architecturecomponents.ui.movies.detail.DetailMovieActivity
 import kotlinx.android.synthetic.main.activity_movies.*
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.noButton
+import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
-import org.jetbrains.anko.yesButton
 
 class MoviesActivity : AppCompatActivity() {
 
@@ -32,7 +29,10 @@ class MoviesActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        moviesAdapter.replaceData(MovieRepository.movies.sortedBy { it.title })
+        doAsync {
+            val data = MovieRepository.getAll()
+            uiThread { moviesAdapter.replaceData(data) }
+        }
     }
 
     private fun setupAdapter() {
@@ -57,8 +57,11 @@ class MoviesActivity : AppCompatActivity() {
     private fun showDeletePopup(movie: Movie) {
         alert(getString(R.string.delete_movie_warning, movie.title)) {
             yesButton {
-                MovieRepository.movies.remove(movie)
-                moviesAdapter.replaceData(MovieRepository.movies.sortedBy { it.title })
+                doAsync {
+                    MovieRepository.delete(movie)
+                    val data = MovieRepository.getAll()
+                    uiThread { moviesAdapter.replaceData(data) }
+                }
             }
             noButton { }
         }.show()

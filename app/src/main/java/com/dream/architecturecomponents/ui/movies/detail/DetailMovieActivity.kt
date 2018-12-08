@@ -9,6 +9,8 @@ import com.dream.architecturecomponents.data.Movie
 import com.dream.architecturecomponents.data.MovieRepository
 import com.dream.architecturecomponents.extension.dateToString
 import kotlinx.android.synthetic.main.activity_detail_movie.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class DetailMovieActivity : AppCompatActivity() {
 
@@ -18,10 +20,13 @@ class DetailMovieActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
 
-        movie = MovieRepository.movies.firstOrNull { it.id == intent.getIntExtra("id", 0) }
-
-        setupToolbar()
-        setupViews()
+        doAsync {
+            movie = MovieRepository.getById(intent.getIntExtra("id", 0) )
+            uiThread {
+                setupToolbar()
+                setupViews()
+            }
+        }
     }
 
     override fun finish() {
