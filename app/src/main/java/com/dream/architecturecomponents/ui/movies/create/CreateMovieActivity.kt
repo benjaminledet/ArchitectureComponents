@@ -6,21 +6,18 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProviders
 import com.dream.architecturecomponents.R
-import com.dream.architecturecomponents.data.Movie
-import com.dream.architecturecomponents.data.MovieRepository
 import com.dream.architecturecomponents.extension.dateToString
 import kotlinx.android.synthetic.main.activity_create_movie.*
-import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.sdk27.coroutines.onCheckedChange
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.sdk27.coroutines.textChangedListener
-import org.jetbrains.anko.uiThread
 import java.util.*
 
 class CreateMovieActivity : AppCompatActivity() {
 
-    private var movie = Movie()
+    private val viewModel: CreateMovieViewModel by lazy { ViewModelProviders.of(this).get(CreateMovieViewModel::class.java) }
 
     private var datePickerDialog: DatePickerDialog? = null
 
@@ -49,7 +46,7 @@ class CreateMovieActivity : AppCompatActivity() {
             true
         }
         R.id.confirm -> {
-            MovieRepository.insert(movie)
+            viewModel.insert()
             ActivityCompat.finishAfterTransition(this@CreateMovieActivity)
             true
         }
@@ -63,26 +60,26 @@ class CreateMovieActivity : AppCompatActivity() {
     private fun setupViews() {
         titleEditText.apply {
             requestFocus()
-            textChangedListener { onTextChanged { charSequence, _, _, _ -> movie.title = charSequence.toString().capitalize() } }
+            textChangedListener { onTextChanged { charSequence, _, _, _ -> viewModel.title = charSequence.toString().capitalize() } }
         }
 
-        overviewEditText.textChangedListener { onTextChanged { charSequence, _, _, _ -> movie.overview = charSequence.toString().capitalize() } }
+        overviewEditText.textChangedListener { onTextChanged { charSequence, _, _, _ -> viewModel.overview = charSequence.toString().capitalize() } }
 
         releaseDateEditText.onClick { datePickerDialog?.show() }
 
-        isForAdultsOnlySwitch.onCheckedChange { _, isChecked -> movie.isForAdultsOnly = isChecked }
+        isForAdultsOnlySwitch.onCheckedChange { _, isChecked -> viewModel.isForAdultsOnly = isChecked }
     }
 
     private fun setupDatePicker() {
         val calendar: Calendar = Calendar.getInstance()
-        calendar.time = movie.releaseDate
+        calendar.time = viewModel.releaseDate
 
         datePickerDialog = DatePickerDialog(
             this,
             { _, year, month, dayOfMonth ->
                 calendar.set(year, month, dayOfMonth)
                 releaseDateEditText.setText(calendar.time.dateToString().capitalize())
-                movie.releaseDate = calendar.time
+                viewModel.releaseDate = calendar.time
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),

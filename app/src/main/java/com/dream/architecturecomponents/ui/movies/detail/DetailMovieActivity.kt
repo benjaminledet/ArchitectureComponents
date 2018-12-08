@@ -5,15 +5,15 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.dream.architecturecomponents.R
 import com.dream.architecturecomponents.data.Movie
-import com.dream.architecturecomponents.data.MovieRepository
 import com.dream.architecturecomponents.extension.dateToString
 import kotlinx.android.synthetic.main.activity_detail_movie.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 class DetailMovieActivity : AppCompatActivity() {
+
+    private val viewModel: DetailMovieViewModel by lazy { ViewModelProviders.of(this).get(DetailMovieViewModel::class.java) }
 
     private var movie: Movie? = null
 
@@ -21,7 +21,9 @@ class DetailMovieActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
 
-        MovieRepository.getById(intent.getIntExtra("id", 0)).observe(this, Observer {
+        viewModel.movieId.value = intent.getIntExtra("id", 0)
+
+        viewModel.movie.observe(this, Observer {
             movie = it
             setupToolbar()
             setupViews()

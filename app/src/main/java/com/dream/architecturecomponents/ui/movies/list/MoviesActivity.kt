@@ -3,11 +3,11 @@ package com.dream.architecturecomponents.ui.movies.list
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dream.architecturecomponents.R
 import com.dream.architecturecomponents.data.Movie
-import com.dream.architecturecomponents.data.MovieRepository
 import com.dream.architecturecomponents.extension.startAnimatedActivity
 import com.dream.architecturecomponents.ui.movies.create.CreateMovieActivity
 import com.dream.architecturecomponents.ui.movies.detail.DetailMovieActivity
@@ -16,6 +16,8 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
 class MoviesActivity : AppCompatActivity() {
+
+    private val viewModel: MoviesViewModel by lazy { ViewModelProviders.of(this).get(MoviesViewModel::class.java) }
 
     private var moviesAdapter = MoviesAdapter()
 
@@ -29,7 +31,7 @@ class MoviesActivity : AppCompatActivity() {
     }
 
     private fun setupAdapter() {
-        MovieRepository.getAll().observe(this, Observer {
+        viewModel.movies.observe(this, Observer {
             moviesAdapter.submitList(it)
         })
 
@@ -53,7 +55,7 @@ class MoviesActivity : AppCompatActivity() {
 
     private fun showDeletePopup(movie: Movie) {
         alert(getString(R.string.delete_movie_warning, movie.title)) {
-            yesButton { MovieRepository.delete(movie) }
+            yesButton { viewModel.delete(movie) }
             noButton { }
         }.show()
     }
