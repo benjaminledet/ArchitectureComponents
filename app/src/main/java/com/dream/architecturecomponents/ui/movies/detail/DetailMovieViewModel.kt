@@ -5,8 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.dream.architecturecomponents.data.Movie
-import com.dream.architecturecomponents.data.MovieRepository
+import com.dream.architecturecomponents.data.locale.Movie
+import com.dream.architecturecomponents.data.locale.MovieRepository
 
 class DetailMovieViewModel(application: Application): AndroidViewModel(application) {
 

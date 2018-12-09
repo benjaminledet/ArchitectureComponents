@@ -3,8 +3,8 @@ package com.dream.architecturecomponents.ui.movies.create
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.dream.architecturecomponents.data.Movie
-import com.dream.architecturecomponents.data.MovieRepository
+import com.dream.architecturecomponents.data.locale.Movie
+import com.dream.architecturecomponents.data.locale.MovieRepository
 import java.util.*
 
 class CreateMovieViewModel(application: Application): AndroidViewModel(application) {
@@ -18,11 +18,13 @@ class CreateMovieViewModel(application: Application): AndroidViewModel(applicati
     var isForAdultsOnly: MutableLiveData<Boolean> = MutableLiveData()
 
     fun insert() {
-        MovieRepository.insert(Movie(
-            title = title.value?.capitalize() ?: "",
-            overview = overview.value?.capitalize() ?: "",
-            releaseDate = releaseDate.value ?: Date(),
-            isForAdultsOnly = isForAdultsOnly.value ?: false
-        ))
+        MovieRepository.insert(
+            Movie(
+                title = title.value?.capitalize() ?: "",
+                overview = overview.value?.capitalize() ?: "",
+                releaseDate = releaseDate.value ?: Date(),
+                isForAdultsOnly = isForAdultsOnly.value ?: false
+            )
+        )
     }
 }

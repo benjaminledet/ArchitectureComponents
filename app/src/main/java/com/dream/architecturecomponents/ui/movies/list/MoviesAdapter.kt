@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dream.architecturecomponents.BR
 import com.dream.architecturecomponents.R
-import com.dream.architecturecomponents.data.Movie
+import com.dream.architecturecomponents.data.locale.Movie
 
 class MoviesAdapter: ListAdapter<Movie, MoviesAdapter.MovieViewHolder>(MovieDiffCallback()) {
 

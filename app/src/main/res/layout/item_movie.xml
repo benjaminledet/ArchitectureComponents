@@ -4,7 +4,7 @@
           xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="movie" type="com.dream.architecturecomponents.data.Movie"/>
+        <variable name="movie" type="com.dream.architecturecomponents.data.locale.Movie"/>
         <variable name="listener" type="com.dream.architecturecomponents.ui.movies.list.MoviesAdapter.OnMovieClickListener"/>
     </data>
 
@@ -17,17 +17,26 @@
             android:onClick="@{() -> listener.onItemClick(movie)}"
             android:onLongClick="@{() -> listener.onItemLongClick(movie)}">
 
+        <ImageView
+                android:id="@+id/cover"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:cover="@{movie.coverUrl}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
         <TextView
                 style="@style/Title"
                 android:id="@+id/title"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 tools:text="Avengers"
                 android:text="@{movie.title}"
                 android:layout_marginTop="@dimen/item_margin"
                 android:layout_marginStart="@dimen/item_margin"
                 android:layout_marginEnd="@dimen/item_margin"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cover"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/overview"/>
@@ -35,14 +44,14 @@
         <TextView
                 style="@style/SubTitle"
                 android:id="@+id/overview"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 tools:text="Un film de super-héros."
                 android:text="@{movie.overview}"
                 android:layout_marginStart="@dimen/item_margin"
                 android:layout_marginEnd="@dimen/item_margin"
                 android:layout_marginBottom="@dimen/item_margin"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cover"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintBottom_toBottomOf="parent"/>

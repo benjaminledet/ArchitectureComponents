@@ -18,4 +18,7 @@
     <string name="jumanji_overview">Après avoir découvert une vieille console contenant un jeu vidéo dont ils n\'avaient jamais entendu parler, quatre jeunes se retrouvent mystérieusement propulsés au coeur de la jungle de Jumanji, dans le corps de leurs avatars. Ils découvrent rapidement que l\'on ne joue pas à Jumanji, mais que c\'est le jeu qui joue avec vous. Pour revenir dans le monde réel, il va leur falloir affronter les pires dangers et triompher de l\'ultime aventure. Sinon, ils resteront à jamais prisonniers du jeu.</string>
     <string name="conjuring_overview">L\'histoire horrible, mais vraie, d\'Ed et Lorraine Warren, enquêteurs paranormaux réputés dans le monde entier, venus en aide à une famille terrorisée par une présence inquiétante dans leur ferme isolée. Contraints d\'affronter une créature démoniaque d\'une force redoutable, les Warren se retrouvent face à l\'affaire la plus terrifiante de leur carrière.</string>
 
+    <string name="movies_loaded">Les films ont bien été récupérés.</string>
+    <string name="movies_loading_error">Désolé, une erreur a empêché la récupération des films.</string>
+
 </resources>

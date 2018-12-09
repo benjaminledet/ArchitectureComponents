@@ -1,4 +1,4 @@
-package com.dream.architecturecomponents.data
+package com.dream.architecturecomponents.data.locale
 
 import androidx.room.TypeConverter
 import java.util.*

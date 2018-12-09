@@ -2,12 +2,18 @@ package com.dream.architecturecomponents.ui.movies.list
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dream.architecturecomponents.R
-import com.dream.architecturecomponents.data.Movie
+import com.dream.architecturecomponents.data.locale.Movie
+import com.dream.architecturecomponents.data.remote.MoviesResponseCallback
+import com.dream.architecturecomponents.databinding.ActivityMoviesBinding
+import com.dream.architecturecomponents.extension.showAction
+import com.dream.architecturecomponents.extension.showError
 import com.dream.architecturecomponents.extension.startAnimatedActivity
 import com.dream.architecturecomponents.ui.movies.create.CreateMovieActivity
 import com.dream.architecturecomponents.ui.movies.detail.DetailMovieActivity
@@ -17,17 +23,22 @@ import org.jetbrains.anko.sdk27.coroutines.onClick
 
 class MoviesActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMoviesBinding
+
     private val viewModel: MoviesViewModel by lazy { ViewModelProviders.of(this).get(MoviesViewModel::class.java) }
 
     private var moviesAdapter = MoviesAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movies)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movies)
+        binding.setVariable(BR.viewModel, viewModel)
+        binding.setLifecycleOwner(this)
 
         setupAdapter()
         setupFab()
         setupRecyclerView()
+        setupSwipeRefreshLayout()
     }
 
     private fun setupAdapter() {
@@ -50,6 +61,29 @@ class MoviesActivity : AppCompatActivity() {
             addItemDecoration(DividerItemDecoration(this@MoviesActivity, DividerItemDecoration.VERTICAL))
             layoutManager = LinearLayoutManager(this@MoviesActivity)
             adapter = moviesAdapter
+        }
+    }
+
+    private fun setupSwipeRefreshLayout() {
+        binding.swipeRefreshLayout.apply {
+
+            fun refresh() {
+                isRefreshing = true
+                viewModel.refresh(object: MoviesResponseCallback {
+                    override fun onSuccess() {
+                        binding.root.showAction(getString(R.string.movies_loaded))
+                        isRefreshing = false
+                    }
+
+                    override fun onError(throwable: Throwable) {
+                        binding.root.showError(getString(R.string.movies_loading_error))
+                        isRefreshing = false
+                    }
+                })
+            }
+
+            setOnRefreshListener { refresh() }
+            post { refresh() }
         }
     }
 

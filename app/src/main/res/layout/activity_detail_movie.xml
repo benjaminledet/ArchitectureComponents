@@ -29,6 +29,15 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/item_margin">
 
+                <ImageView
+                        android:id="@+id/cover"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        app:cover="@{viewModel.movie.coverUrl}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
                 <TextView
                         style="@style/Title"
                         android:id="@+id/overviewTitle"
@@ -36,7 +45,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/overview"
                         android:textSize="18sp"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/cover"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -96,9 +105,11 @@
                         tools:text="Oui"
                         android:text="@{viewModel.movie.isForAdultsOnly ? @string/yes : @string/no}"
                         android:layout_marginTop="@dimen/item_margin"
+                        android:layout_marginBottom="@dimen/item_margin"
                         app:layout_constraintTop_toBottomOf="@id/isForAdultsOnlyTitle"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

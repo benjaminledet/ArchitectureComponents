@@ -1,4 +1,4 @@
-package com.dream.architecturecomponents.data
+package com.dream.architecturecomponents.data.locale
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -14,6 +14,8 @@ data class Movie(
     var title: String = "Sans titre",
 
     var overview: String = "Inconnu",
+
+    var coverUrl: String? = null,
 
     @ColumnInfo(name = "release_date")
     var releaseDate: Date = Date(),

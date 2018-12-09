@@ -1,4 +1,4 @@
-package com.dream.architecturecomponents.data
+package com.dream.architecturecomponents.data.locale
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
@@ -9,10 +9,7 @@ interface MovieDao {
     @Query("SELECT * FROM movie WHERE id = :id")
     fun getById(id: Int): LiveData<Movie>
 
-    @Query("SELECT * FROM Movie ORDER BY title")
-    fun getAll(): List<Movie>
-
-    @Query("SELECT * FROM Movie ORDER BY title")
+    @Query("SELECT * FROM Movie")
     fun getAllLive(): LiveData<List<Movie>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
