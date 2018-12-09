@@ -17,7 +17,6 @@ import com.dream.architecturecomponents.extension.showError
 import com.dream.architecturecomponents.extension.startAnimatedActivity
 import com.dream.architecturecomponents.ui.movies.create.CreateMovieActivity
 import com.dream.architecturecomponents.ui.movies.detail.DetailMovieActivity
-import kotlinx.android.synthetic.main.activity_movies.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
@@ -53,11 +52,11 @@ class MoviesActivity : AppCompatActivity() {
     }
 
     private fun setupFab() {
-        fab.onClick { startAnimatedActivity(intentFor<CreateMovieActivity>()) }
+        binding.fab.onClick { startAnimatedActivity(intentFor<CreateMovieActivity>()) }
     }
 
     private fun setupRecyclerView() {
-        recyclerView.apply {
+        binding.recyclerView.apply {
             addItemDecoration(DividerItemDecoration(this@MoviesActivity, DividerItemDecoration.VERTICAL))
             layoutManager = LinearLayoutManager(this@MoviesActivity)
             adapter = moviesAdapter
