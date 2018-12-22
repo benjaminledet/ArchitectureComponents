@@ -4,8 +4,8 @@
           xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="movie" type="com.dream.architecturecomponents.data.locale.Movie"/>
-        <variable name="listener" type="com.dream.architecturecomponents.ui.movies.list.MoviesAdapter.OnMovieClickListener"/>
+        <variable name="item" type="com.dream.architecturecomponents.data.locale.Movie"/>
+        <variable name="listener" type="com.dream.architecturecomponents.utils.OnItemClickListener"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,14 +14,14 @@
             android:background="?attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> listener.onItemClick(movie)}"
-            android:onLongClick="@{() -> listener.onItemLongClick(movie)}">
+            android:onClick="@{() -> listener.onItemClick(item)}"
+            android:onLongClick="@{() -> listener.onItemLongClick(item)}">
 
         <ImageView
                 android:id="@+id/cover"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:cover="@{movie.coverUrl}"
+                app:cover="@{item.coverUrl}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
@@ -32,7 +32,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 tools:text="Avengers"
-                android:text="@{movie.title}"
                 android:layout_marginTop="@dimen/item_margin"
                 android:layout_marginStart="@dimen/item_margin"
                 android:layout_marginEnd="@dimen/item_margin"
@@ -47,7 +46,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 tools:text="Un film de super-héros."
-                android:text="@{movie.overview}"
+                android:text="@{item.overview}"
                 android:layout_marginStart="@dimen/item_margin"
                 android:layout_marginEnd="@dimen/item_margin"
                 android:layout_marginBottom="@dimen/item_margin"

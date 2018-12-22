@@ -15,25 +15,21 @@ import com.dream.architecturecomponents.databinding.ActivityMoviesBinding
 import com.dream.architecturecomponents.extension.showAction
 import com.dream.architecturecomponents.extension.showError
 import com.dream.architecturecomponents.extension.startAnimatedActivity
+import com.dream.architecturecomponents.ui.base.BaseActivity
 import com.dream.architecturecomponents.ui.movies.create.CreateMovieActivity
 import com.dream.architecturecomponents.ui.movies.detail.DetailMovieActivity
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
-class MoviesActivity : AppCompatActivity() {
+class MoviesActivity : BaseActivity<MoviesViewModel, ActivityMoviesBinding>() {
 
-    private lateinit var binding: ActivityMoviesBinding
+    override val layout: Int = R.layout.activity_movies
 
-    private val viewModel: MoviesViewModel by lazy { ViewModelProviders.of(this).get(MoviesViewModel::class.java) }
+    override fun setViewModel(): Class<MoviesViewModel> = MoviesViewModel::class.java
 
-    private var moviesAdapter = MoviesAdapter()
+    private var moviesAdapter = MoviesAdapter(this)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movies)
-        binding.setVariable(BR.viewModel, viewModel)
-        binding.setLifecycleOwner(this)
-
+    override fun initView(savedInstanceState: Bundle?) {
         setupAdapter()
         setupFab()
         setupRecyclerView()

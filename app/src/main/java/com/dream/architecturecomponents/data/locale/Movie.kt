@@ -9,7 +9,7 @@ import java.util.*
 data class Movie(
 
     @PrimaryKey
-    var id: Int = 0,
+    override var id: Int = 0,
 
     var title: String = "Sans titre",
 
@@ -23,4 +23,4 @@ data class Movie(
     @ColumnInfo(name = "is_for_adult_only")
     var isForAdultsOnly: Boolean = false
 
-)
+): BaseObject

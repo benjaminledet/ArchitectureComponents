@@ -11,31 +11,23 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProviders
 import com.dream.architecturecomponents.R
 import com.dream.architecturecomponents.databinding.ActivityCreateMovieBinding
+import com.dream.architecturecomponents.ui.base.BaseActivity
+import com.dream.architecturecomponents.ui.movies.detail.DetailMovieViewModel
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import java.util.*
 
-class CreateMovieActivity : AppCompatActivity() {
+class CreateMovieActivity : BaseActivity<CreateMovieViewModel, ActivityCreateMovieBinding>() {
 
-    private lateinit var binding: ActivityCreateMovieBinding
+    override val layout: Int = R.layout.activity_create_movie
 
-    private val viewModel: CreateMovieViewModel by lazy { ViewModelProviders.of(this).get(CreateMovieViewModel::class.java) }
+    override fun setViewModel(): Class<CreateMovieViewModel> = CreateMovieViewModel::class.java
 
     private var datePickerDialog: DatePickerDialog? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_create_movie)
-        binding.setVariable(BR.viewModel, viewModel)
-        binding.setLifecycleOwner(this)
-
+    override fun initView(savedInstanceState: Bundle?) {
         setupDatePicker()
         setupToolbar()
         setupViews()
-    }
-
-    override fun finish() {
-        super.finish()
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -44,10 +36,6 @@ class CreateMovieActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
-        android.R.id.home -> {
-            ActivityCompat.finishAfterTransition(this)
-            true
-        }
         R.id.confirm -> {
             viewModel.insert()
             ActivityCompat.finishAfterTransition(this@CreateMovieActivity)

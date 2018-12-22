@@ -3,60 +3,28 @@ package com.dream.architecturecomponents.ui.movies.list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.dream.architecturecomponents.BR
+import androidx.lifecycle.LifecycleOwner
 import com.dream.architecturecomponents.R
 import com.dream.architecturecomponents.data.locale.Movie
+import com.dream.architecturecomponents.databinding.ItemMovieBinding
+import com.dream.architecturecomponents.ui.base.BaseAdapter
+import com.dream.architecturecomponents.ui.base.BaseViewHolder
+import com.dream.architecturecomponents.utils.OnItemClickListener
 
-class MoviesAdapter: ListAdapter<Movie, MoviesAdapter.MovieViewHolder>(MovieDiffCallback()) {
+class MoviesAdapter(lifecycleOwner: LifecycleOwner): BaseAdapter<Movie>(lifecycleOwner) {
 
-    var onClick: ((item: Movie) -> Unit)? = null
-    var onLongClick: ((item: Movie) -> Unit)? = null
+    override fun layoutFor(position: Int): Int = R.layout.item_movie
 
-    override fun getItemViewType(position: Int): Int = R.layout.item_movie
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val viewDataBinding: ViewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), viewType, parent, false)
-        return MovieViewHolder(viewDataBinding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Movie, *> {
+        val binding: ItemMovieBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), viewType, parent, false)
+        return MovieViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(getItem(position), object: OnMovieClickListener {
-            override fun onItemClick(movie: Movie) {
-                onClick?.invoke(movie)
-            }
+    class MovieViewHolder(private val binding: ItemMovieBinding): BaseViewHolder<Movie, ItemMovieBinding>(binding) {
 
-            override fun onItemLongClick(movie: Movie): Boolean {
-                onLongClick?.invoke(movie)
-                return true
-            }
-        })
-    }
-
-    class MovieDiffCallback: DiffUtil.ItemCallback<Movie>() {
-
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean = oldItem == newItem
-
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean = oldItem.id == newItem.id
-    }
-
-    class MovieViewHolder(private val viewDataBinding: ViewDataBinding): RecyclerView.ViewHolder(viewDataBinding.root) {
-
-        fun bind(movie: Movie, onMovieClickListener: OnMovieClickListener) {
-            viewDataBinding.setVariable(BR.movie, movie)
-            viewDataBinding.setVariable(BR.listener, onMovieClickListener)
-            viewDataBinding.executePendingBindings()
+        override fun bind(lifecycleOwner: LifecycleOwner, item: Movie, listener: OnItemClickListener<Movie>) {
+            super.bind(lifecycleOwner, item, listener)
+            binding.title.text = item.title
         }
-    }
-
-    interface OnMovieClickListener {
-
-        fun onItemClick(movie: Movie)
-
-        fun onItemLongClick(movie: Movie): Boolean
-
     }
 }
