@@ -4,15 +4,10 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.library.baseAdapters.BR
-import androidx.lifecycle.ViewModelProviders
 import com.dream.architecturecomponents.R
 import com.dream.architecturecomponents.databinding.ActivityCreateMovieBinding
 import com.dream.architecturecomponents.ui.base.BaseActivity
-import com.dream.architecturecomponents.ui.movies.detail.DetailMovieViewModel
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
