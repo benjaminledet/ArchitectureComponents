@@ -7,7 +7,6 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModelProviders
 import com.dream.architecturecomponents.BR
 import com.dream.architecturecomponents.R
 import com.dream.architecturecomponents.ui.movies.list.MoviesActivity
@@ -16,7 +15,7 @@ abstract class BaseActivity<V: AndroidViewModel, B: ViewDataBinding>: AppCompatA
 
     protected abstract val layout: Int
 
-    protected val viewModel: V by lazy { ViewModelProviders.of(this).get(setViewModel()) }
+    protected abstract val viewModel: V
 
     lateinit var binding: B
 
@@ -43,7 +42,5 @@ abstract class BaseActivity<V: AndroidViewModel, B: ViewDataBinding>: AppCompatA
     }
 
     protected abstract fun initView(savedInstanceState: Bundle?)
-
-    protected abstract fun setViewModel(): Class<V>
 
 }

@@ -1,6 +1,6 @@
 package com.dream.architecturecomponents.utils
 
-import com.dream.architecturecomponents.data.locale.BaseObject
+import com.dream.architecturecomponents.data.model.BaseObject
 
 interface OnItemClickListener<T: BaseObject> {
 

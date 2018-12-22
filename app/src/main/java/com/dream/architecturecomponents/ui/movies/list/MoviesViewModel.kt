@@ -3,19 +3,23 @@ package com.dream.architecturecomponents.ui.movies.list
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.dream.architecturecomponents.data.locale.Movie
-import com.dream.architecturecomponents.data.locale.MovieRepository
+import com.dream.architecturecomponents.data.model.Movie
+import com.dream.architecturecomponents.data.MovieRepository
 import com.dream.architecturecomponents.data.remote.MoviesResponseCallback
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class MoviesViewModel(application: Application): AndroidViewModel(application) {
+class MoviesViewModel(application: Application): AndroidViewModel(application), KoinComponent {
 
-    var movies: LiveData<List<Movie>> = MovieRepository.getAll()
+    private val movieRepository: MovieRepository by inject()
+
+    var movies: LiveData<List<Movie>> = movieRepository.getAll()
 
     fun delete(movie: Movie) {
-        MovieRepository.delete(movie)
+        movieRepository.delete(movie)
     }
 
     fun refresh(callback: MoviesResponseCallback) {
-        MovieRepository.downloadMovies(callback)
+        movieRepository.downloadMovies(callback)
     }
 }

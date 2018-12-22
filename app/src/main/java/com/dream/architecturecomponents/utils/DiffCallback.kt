@@ -1,7 +1,7 @@
 package com.dream.architecturecomponents.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.dream.architecturecomponents.data.locale.BaseObject
+import com.dream.architecturecomponents.data.model.BaseObject
 
 class DiffCallback<T: BaseObject>(private val updateWhen: ((T, T) -> Boolean)?): DiffUtil.ItemCallback<T>() {
 

@@ -4,7 +4,7 @@
           xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="item" type="com.dream.architecturecomponents.data.locale.Movie"/>
+        <variable name="item" type="com.dream.architecturecomponents.data.model.Movie"/>
         <variable name="listener" type="com.dream.architecturecomponents.utils.OnItemClickListener"/>
     </data>
 

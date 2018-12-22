@@ -1,15 +1,11 @@
 package com.dream.architecturecomponents.ui.movies.list
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dream.architecturecomponents.R
-import com.dream.architecturecomponents.data.locale.Movie
+import com.dream.architecturecomponents.data.model.Movie
 import com.dream.architecturecomponents.data.remote.MoviesResponseCallback
 import com.dream.architecturecomponents.databinding.ActivityMoviesBinding
 import com.dream.architecturecomponents.extension.showAction
@@ -20,12 +16,13 @@ import com.dream.architecturecomponents.ui.movies.create.CreateMovieActivity
 import com.dream.architecturecomponents.ui.movies.detail.DetailMovieActivity
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MoviesActivity : BaseActivity<MoviesViewModel, ActivityMoviesBinding>() {
 
     override val layout: Int = R.layout.activity_movies
 
-    override fun setViewModel(): Class<MoviesViewModel> = MoviesViewModel::class.java
+    override val viewModel: MoviesViewModel by viewModel()
 
     private var moviesAdapter = MoviesAdapter(this)
 

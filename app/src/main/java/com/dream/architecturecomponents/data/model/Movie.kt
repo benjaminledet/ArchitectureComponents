@@ -1,4 +1,4 @@
-package com.dream.architecturecomponents.data.locale
+package com.dream.architecturecomponents.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

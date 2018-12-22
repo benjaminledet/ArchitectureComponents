@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import com.dream.architecturecomponents.R
-import com.dream.architecturecomponents.data.locale.Movie
+import com.dream.architecturecomponents.data.model.Movie
 import com.dream.architecturecomponents.databinding.ItemMovieBinding
 import com.dream.architecturecomponents.ui.base.BaseAdapter
 import com.dream.architecturecomponents.ui.base.BaseViewHolder

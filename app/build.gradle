@@ -64,4 +64,8 @@ dependencies {
 
     // Design
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // Koin
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 }

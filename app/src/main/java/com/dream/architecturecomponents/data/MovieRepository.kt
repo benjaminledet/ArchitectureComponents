@@ -1,8 +1,9 @@
-package com.dream.architecturecomponents.data.locale
+package com.dream.architecturecomponents.data
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
+import com.dream.architecturecomponents.data.locale.MovieDao
+import com.dream.architecturecomponents.data.model.Movie
 import com.dream.architecturecomponents.data.remote.MovieResponse
 import com.dream.architecturecomponents.data.remote.MovieService
 import com.dream.architecturecomponents.data.remote.MoviesResponseCallback
@@ -12,21 +13,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 import java.util.*
 
-object MovieRepository {
+class MovieRepository: KoinComponent {
 
-    private lateinit var database: MovieDatabase
-
-    private lateinit var movieDao: MovieDao
+    private val movieDao: MovieDao by inject()
 
     private val service = MovieService.create()
-
-    fun initialize(application: Application) {
-        database =
-                MovieDatabase.buildInstance(application)
-        movieDao = database.movieDao()
-    }
 
     //region locale
 
@@ -72,14 +67,15 @@ object MovieRepository {
             )
     }
 
-    private fun movieResponseToMovie(movieResponse: MovieResponse): Movie = Movie(
-        id = movieResponse.id,
-        title = movieResponse.title,
-        coverUrl = movieResponse.backdropPath,
-        overview = movieResponse.overview,
-        releaseDate = movieResponse.releaseDate.toDate("yyyy-MM-dd") ?: Date(),
-        isForAdultsOnly = movieResponse.adult
-    )
+    private fun movieResponseToMovie(movieResponse: MovieResponse): Movie =
+        Movie(
+            id = movieResponse.id,
+            title = movieResponse.title,
+            coverUrl = movieResponse.backdropPath,
+            overview = movieResponse.overview,
+            releaseDate = movieResponse.releaseDate.toDate("yyyy-MM-dd") ?: Date(),
+            isForAdultsOnly = movieResponse.adult
+        )
 
     //endregion
 }

@@ -2,7 +2,7 @@ package com.dream.architecturecomponents.ui.base
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
-import com.dream.architecturecomponents.data.locale.BaseObject
+import com.dream.architecturecomponents.data.model.BaseObject
 import com.dream.architecturecomponents.utils.DiffCallback
 import com.dream.architecturecomponents.utils.OnItemClickListener
 

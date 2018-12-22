@@ -2,6 +2,7 @@ package com.dream.architecturecomponents.data.locale
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.dream.architecturecomponents.data.model.Movie
 
 @Dao
 interface MovieDao {
